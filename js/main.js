@@ -453,7 +453,6 @@ $(document).ready(function () {
 /* modal */
 
 $('button[data-modal], a[data-modal]').on('click touchstart', function (event) {
-  console.log('2');
   var nameModal = $(event.target).closest('[data-modal]').attr('data-modal');
 
   if (nameModal === 'all-address' && $(window).width() < 768) {
@@ -470,7 +469,7 @@ $('button[data-modal], a[data-modal]').on('click touchstart', function (event) {
 /* Плавный скролл по якорям */
 
 $(document).ready(function () {
-  $('ul.nav a, .footer__nav a').on('click', function (event) {
+  $('.nav ul a, .footer__nav a').on('click', function (event) {
     event.preventDefault();
     var id = $(this).attr('href');
     var top = $(id).offset().top + 30;
@@ -502,7 +501,7 @@ $(document).ready(function () {
 
 /* Кнопка меню навигации */
 
-$('.menu-toggle').on('click touchstart', function () {
+$('.menu-toggle').on('click', function () {
   $(this).toggleClass('on');
   $('.menu-section').toggleClass('on');
   $('nav ul').toggleClass('hidden');
