@@ -167,7 +167,7 @@ ymaps.ready(init);
 function init() {
   var myMap = new ymaps.Map("map", {
     center: [55.76, 37.64],
-    zoom: 10,
+    zoom: 12,
     controls: ['zoomControl']
   }),
       collection = new ymaps.GeoObjectCollection(null, {
@@ -312,11 +312,16 @@ $(document).ready(function () {
     margin: 25,
     smartSpeed: 500,
     animateIn: 'fadeIn',
-    animateOut: 'fadeOut'
+    animateOut: 'fadeOut',
+    dots: false,
+    loop: true
   });
   owl.on('changed.owl.carousel', function (event) {
-    owlWrapper.find('span.current-offer').html(event.item.index + 1);
-    owlWrapper.find('span.length-offer').html(event.item.count);
+    if (event.item.index === 2) {
+      owlWrapper.find('span.current-offer').html(event.item.count);
+    } else {
+      owlWrapper.find('span.current-offer').html(event.item.index - 2);
+    }
   });
   owlWrapper.find('.btn-next').click(function () {
     owl.trigger('next.owl.carousel', [700]);
@@ -330,7 +335,42 @@ $(document).ready(function () {
 /* owl-menu */
 
 $(document).ready(function () {
-  var owlMenu = $('.owl-carousel.owl-menu');
+  var owlMenu = $('.owl-carousel.owl-menu.owl-menu-combo');
+  var owlMenuWrapper = owlMenu.parent('.owl-carousel-wrapper');
+  owlMenu.on('initialized.owl.carousel', function (event) {
+    owlMenuWrapper.find('span.length-offer').html(event.item.count);
+  });
+  owlMenu.owlCarousel({
+    items: 1,
+    margin: 25,
+    smartSpeed: 500,
+    animateIn: 'fadeIn',
+    animateOut: 'fadeOut',
+    loop: true,
+    dots: false
+  });
+  owlMenu.on('changed.owl.carousel', function (event) {
+    if (event.item.index === 0) {
+      owlMenuWrapper.find('span.current-offer').html(1);
+    } else if (event.item.index === 3) {
+      owlMenuWrapper.find('span.current-offer').html(event.item.count);
+    } else {
+      owlMenuWrapper.find('span.current-offer').html(event.item.index - 3);
+    }
+  });
+  owlMenuWrapper.find('.btn-next').click(function () {
+    owlMenu.trigger('next.owl.carousel', [700]);
+  });
+  owlMenuWrapper.find('.btn-prev').click(function () {
+    owlMenu.trigger('prev.owl.carousel', [700]);
+  });
+});
+/* END owl-menu */
+
+/* owl-menu */
+
+$(document).ready(function () {
+  var owlMenu = $('.owl-carousel.owl-menu.owl-menu-coffee');
   var owlMenuWrapper = owlMenu.parent('.owl-carousel-wrapper');
   owlMenu.on('initialized.owl.carousel', function (event) {
     owlMenuWrapper.find('span.length-offer').html(event.item.count);
@@ -343,8 +383,11 @@ $(document).ready(function () {
     animateOut: 'fadeOut'
   });
   owlMenu.on('changed.owl.carousel', function (event) {
-    owlMenuWrapper.find('span.current-offer').html(event.item.index + 1);
-    owlMenuWrapper.find('span.length-offer').html(event.item.count);
+    if (event.item.index === 2) {
+      owlMenuWrapper.find('span.current-offer').html(event.item.count);
+    } else {
+      owlMenuWrapper.find('span.current-offer').html(event.item.index - 2);
+    }
   });
   owlMenuWrapper.find('.btn-next').click(function () {
     owlMenu.trigger('next.owl.carousel', [700]);
@@ -363,12 +406,15 @@ $(document).ready(function () {
     items: 1,
     margin: 25,
     smartSpeed: 500,
-    dots: true,
+    dots: false,
+    nav: true,
+    navText: ['<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAADFwAAAxcBwpsE1QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAD7SURBVGiB7dk9DgFRGIXhG5XEClTWQEnHCuwFhURQYzVqe7EBCZKpX4W/ZMwtvpnEucP3dFOQ8yaSuWZCcM45ZwB0gDHQUm8pDRgAF+726j2lPCKuvGXqTWYFEQBz9S4TYAhkuYiJepdJJGKq3mXyKxGjgoiZepeJR6QiErFU7zKJRKzUu0w8IhWRiLV6l4lHpALo83mK3ap3mQHHXMROtaVR8fPkrs8Vv08j8tNaqHeVAvSAUy5mo95Visek6h9i6ndvCeH3YroekyKPSVUkRnbIrMRjUkXxa4V6PQd+Koip53+ZEF4x50fIQb2nEqDN/ZVDU73FOee+5wawKRICw7estAAAAABJRU5ErkJggg==">', '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAADFwAAAxcBwpsE1QAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAADbSURBVGiB7dk7CsJAFIXhwUpwAzYuwlLLlK7HR+er9bEcS5fiDgIhYv1bKIhjZSLcueP5umnC+SHFwIQgIvI3gB4wAQbWW1oBTjxUwNh6T2NAyUvtNgaY8s51zCyKuQGF9a5GcouZKyZFucWscopZKyZFucVsFJOi3GK2OcUcopgaGFnvagQ4RjGXNt/r/GpYA1V0xmRFG8DS/a8F7KKIEhha7/oKsFdEChSRCkWkgs8riCJMKCIVuUTE13GXEYsowuezAnB1HxFCCMD5GeH+6a0LFEDfeouIiC93OHQR8Jz8JwgAAAAASUVORK5CYII=">'],
     responsive: {
       768: {
         items: 3
       }
-    }
+    },
+    loop: true
   });
 });
 /* END owl-about */
@@ -385,6 +431,7 @@ $(document).ready(function () {
       margin: 25,
       smartSpeed: 500,
       nav: true,
+      dots: false,
       loop: true,
       navText: ['<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB3SURBVEhL7Y3BDUBAEEVXOFMA3VCUGlwcXFSgEppQhnDmzcZBAzsb2XnJy+TP5TnjrxTvVaXFAwe/lJDohTf28tDgGx0xw+BYNCgWDUqUaIUnSnRGlaiQ44oS3rFBNUrc0OLpxmtUw+LR44s8NJH4hJ1fRuI49wBaqTmbN42i3gAAAABJRU5ErkJggg==">', '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB2SURBVEhL7c9BCkBQFIXhp6RMDEztjbICy7AHy5E9yJhNSPhvMTdxGZy/vl7dyekF9bfi63UtxYIemR28SjDiwADX8QITNK5xlzT+2fgMG+/s4FWFDTtqO3hU4h5t7OCRRl9No6/2yWiOFa6jVoQW9mulHhbCCeZvOaH0XJ0bAAAAAElFTkSuQmCC">']
     });
@@ -405,7 +452,8 @@ $(document).ready(function () {
 });
 /* modal */
 
-$('button[data-modal], a[data-modal]').on('click', function (event) {
+$('button[data-modal], a[data-modal]').on('click touchstart', function (event) {
+  console.log('2');
   var nameModal = $(event.target).closest('[data-modal]').attr('data-modal');
 
   if (nameModal === 'all-address' && $(window).width() < 768) {
@@ -454,12 +502,19 @@ $(document).ready(function () {
 
 /* Кнопка меню навигации */
 
-$('.menu-toggle').on('click', function () {
+$('.menu-toggle').on('click touchstart', function () {
   $(this).toggleClass('on');
   $('.menu-section').toggleClass('on');
   $('nav ul').toggleClass('hidden');
 });
 /* END Кнопка меню навигации */
+
+/* Скачать меню */
+
+$('button[data-file], a[data-file]').on('click', function (event) {
+  window.open('/menu.pdf');
+});
+/* END Скачать меню */
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
