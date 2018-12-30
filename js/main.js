@@ -514,6 +514,12 @@ $('button[data-file], a[data-file]').on('click', function (event) {
   window.open('/menu.pdf');
 });
 /* END Скачать меню */
+
+/* Решение проблемы с прыгающей высотой блоков (vh) в мобильных браузерах */
+
+var vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', "".concat(vh, "px"));
+/* END Решение проблемы с прыгающей высотой блоков (vh) в мобильных браузерах */
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
