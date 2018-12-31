@@ -301,32 +301,41 @@ __webpack_require__.r(__webpack_exports__);
 $(document).ready(function () {
   var owl = $('.owl-carousel.owl-special-offers');
   var owlWrapper = owl.parent('.owl-carousel-wrapper');
+  var currentOffer = owlWrapper.find('span.current-offer');
   owl.on('initialized.owl.carousel', function (event) {
     owlWrapper.find('span.length-offer').html(event.item.count);
   });
   owl.owlCarousel({
     items: 1,
-    autoplay: true,
-    autoplayTimeout: 6000,
-    autoplayHoverPause: true,
     margin: 25,
     smartSpeed: 500,
-    animateIn: 'fadeIn',
-    animateOut: 'fadeOut',
     dots: false,
-    loop: true
+    loop: true,
+    responsive: {
+      768: {
+        autoplay: true,
+        autoplayTimeout: 6000,
+        autoplayHoverPause: true
+      }
+    }
   });
   owl.on('changed.owl.carousel', function (event) {
     if (event.item.index === 2) {
-      owlWrapper.find('span.current-offer').html(event.item.count);
+      currentOffer.html(event.item.count);
     } else {
-      owlWrapper.find('span.current-offer').html(event.item.index - 2);
+      currentOffer.html(event.item.index - 2);
     }
   });
   owlWrapper.find('.btn-next').click(function () {
     owl.trigger('next.owl.carousel', [700]);
   });
+  owlWrapper.find('.offer-nav').hover(function () {
+    owl.trigger('stop.owl.autoplay');
+  }, function () {
+    owl.trigger('play.owl.autoplay', [6000]);
+  });
   owlWrapper.find('.btn-prev').click(function () {
+    owl.trigger('stop.owl.autoplay');
     owl.trigger('prev.owl.carousel', [700]);
   });
 });
