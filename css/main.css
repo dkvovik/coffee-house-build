@@ -4294,7 +4294,7 @@ header.header {
         min-height: -moz-calc(var(--vh, 1vh) * 100 - 60px);
         min-height: calc(var(--vh, 1vh) * 100 - 60px); } }
   html.no-webp header.header {
-    background: url("../images/header.jpg") top center no-repeat;
+    background: url("../images/header.jpg") top center no-repeat, #3f2b2d;
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
@@ -4303,7 +4303,7 @@ header.header {
       html.no-webp header.header {
         background-position-x: 60%; } }
   html.webp header.header {
-    background: url("../images/header.webp") top center no-repeat;
+    background: url("../images/header.webp") top center no-repeat, #3f2b2d;
     -webkit-background-size: cover;
        -moz-background-size: cover;
          -o-background-size: cover;
